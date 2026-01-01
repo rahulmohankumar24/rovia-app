@@ -142,10 +142,179 @@ struct AnalyticsView: View {
             // Weekly Chart
             weeklyChartCard
 
-            // Quick Actions Grid
-            quickActionsGrid
+            // Macro Breakdown
+            macroBreakdownCard
+
+            // Top Insights Preview
+            topInsightsPreview
+
+            // Weekly Goal Progress
+            weeklyGoalCard
         }
         .padding(.top, 16)
+    }
+
+    private var macroBreakdownCard: some View {
+        VStack(alignment: .leading, spacing: 14) {
+            Text("Weekly Averages")
+                .font(.system(size: 15, weight: .semibold))
+                .foregroundColor(Theme.Colors.foreground)
+
+            HStack(spacing: 12) {
+                MacroAverageItem(
+                    label: "Calories",
+                    value: stats?.avgCalories ?? 0,
+                    target: stats?.targetCalories ?? 2000,
+                    color: Theme.Colors.calories
+                )
+
+                MacroAverageItem(
+                    label: "Protein",
+                    value: stats?.avgProtein ?? 0,
+                    target: 150,
+                    unit: "g",
+                    color: Theme.Colors.protein
+                )
+
+                MacroAverageItem(
+                    label: "Carbs",
+                    value: Int(Double(stats?.avgCalories ?? 0) * 0.12),
+                    target: 250,
+                    unit: "g",
+                    color: Theme.Colors.carbs
+                )
+
+                MacroAverageItem(
+                    label: "Fat",
+                    value: Int(Double(stats?.avgCalories ?? 0) * 0.035),
+                    target: 70,
+                    unit: "g",
+                    color: Theme.Colors.fat
+                )
+            }
+        }
+        .padding(16)
+        .background(Theme.Colors.card)
+        .cornerRadius(20)
+        .shadow(color: Color.black.opacity(0.04), radius: 8, x: 0, y: 2)
+    }
+
+    private var topInsightsPreview: some View {
+        VStack(alignment: .leading, spacing: 14) {
+            HStack {
+                Text("Quick Insights")
+                    .font(.system(size: 15, weight: .semibold))
+                    .foregroundColor(Theme.Colors.foreground)
+
+                Spacer()
+
+                Button {
+                    selectedTab = .insights
+                } label: {
+                    Text("See All")
+                        .font(.system(size: 12, weight: .medium))
+                        .foregroundColor(Theme.Colors.primary)
+                }
+            }
+
+            if let strength = strengths.first {
+                HStack(spacing: 12) {
+                    ZStack {
+                        Circle()
+                            .fill(Color.green.opacity(0.12))
+                            .frame(width: 36, height: 36)
+                        Image(systemName: "trophy.fill")
+                            .font(.system(size: 14))
+                            .foregroundColor(.green)
+                    }
+
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text(strength.title)
+                            .font(.system(size: 13, weight: .semibold))
+                            .foregroundColor(Theme.Colors.foreground)
+                        Text(strength.description)
+                            .font(.system(size: 11))
+                            .foregroundColor(Theme.Colors.mutedForeground)
+                            .lineLimit(1)
+                    }
+
+                    Spacer()
+                }
+                .padding(12)
+                .background(Theme.Colors.muted.opacity(0.3))
+                .cornerRadius(14)
+            }
+
+            if let opportunity = opportunities.first {
+                HStack(spacing: 12) {
+                    ZStack {
+                        Circle()
+                            .fill(Color.orange.opacity(0.12))
+                            .frame(width: 36, height: 36)
+                        Image(systemName: "arrow.up.right")
+                            .font(.system(size: 14))
+                            .foregroundColor(.orange)
+                    }
+
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text(opportunity.title)
+                            .font(.system(size: 13, weight: .semibold))
+                            .foregroundColor(Theme.Colors.foreground)
+                        Text(opportunity.suggestion ?? opportunity.description)
+                            .font(.system(size: 11))
+                            .foregroundColor(Theme.Colors.mutedForeground)
+                            .lineLimit(1)
+                    }
+
+                    Spacer()
+                }
+                .padding(12)
+                .background(Theme.Colors.muted.opacity(0.3))
+                .cornerRadius(14)
+            }
+        }
+        .padding(16)
+        .background(Theme.Colors.card)
+        .cornerRadius(20)
+        .shadow(color: Color.black.opacity(0.04), radius: 8, x: 0, y: 2)
+    }
+
+    private var weeklyGoalCard: some View {
+        VStack(alignment: .leading, spacing: 14) {
+            Text("Weekly Goals")
+                .font(.system(size: 15, weight: .semibold))
+                .foregroundColor(Theme.Colors.foreground)
+
+            VStack(spacing: 12) {
+                GoalProgressRow(
+                    icon: "checkmark.circle.fill",
+                    iconColor: .green,
+                    label: "Days on target",
+                    current: stats?.daysOnTrack ?? 0,
+                    goal: 5
+                )
+
+                GoalProgressRow(
+                    icon: "bolt.fill",
+                    iconColor: Theme.Colors.protein,
+                    label: "Protein goal hit",
+                    current: min(stats?.daysOnTrack ?? 0, 4),
+                    goal: 7
+                )
+
+                GoalProgressRow(
+                    icon: "flame.fill",
+                    iconColor: .orange,
+                    label: "Calorie accuracy",
+                    current: stats?.daysOnTrack ?? 0,
+                    goal: 7
+                )
+            }
+        }
+        .padding(16)
+        .background(Theme.Colors.card)
+        .cornerRadius(20)
+        .shadow(color: Color.black.opacity(0.04), radius: 8, x: 0, y: 2)
     }
 
     private var statsRow: some View {
@@ -1040,6 +1209,84 @@ struct MacroPill: View {
                 .foregroundColor(Theme.Colors.mutedForeground)
         }
         .frame(maxWidth: .infinity)
+    }
+}
+
+struct MacroAverageItem: View {
+    let label: String
+    let value: Int
+    let target: Int
+    var unit: String = ""
+    let color: Color
+
+    private var progress: Double {
+        min(Double(value) / Double(target), 1.0)
+    }
+
+    var body: some View {
+        VStack(spacing: 6) {
+            ZStack {
+                Circle()
+                    .stroke(Theme.Colors.muted, lineWidth: 3)
+                    .frame(width: 44, height: 44)
+
+                Circle()
+                    .trim(from: 0, to: progress)
+                    .stroke(color, style: StrokeStyle(lineWidth: 3, lineCap: .round))
+                    .frame(width: 44, height: 44)
+                    .rotationEffect(.degrees(-90))
+
+                Text("\(value)\(unit)")
+                    .font(.system(size: 10, weight: .bold))
+                    .foregroundColor(color)
+            }
+
+            Text(label)
+                .font(.system(size: 10))
+                .foregroundColor(Theme.Colors.mutedForeground)
+        }
+        .frame(maxWidth: .infinity)
+    }
+}
+
+struct GoalProgressRow: View {
+    let icon: String
+    let iconColor: Color
+    let label: String
+    let current: Int
+    let goal: Int
+
+    private var progress: Double {
+        min(Double(current) / Double(goal), 1.0)
+    }
+
+    var body: some View {
+        HStack(spacing: 10) {
+            Image(systemName: icon)
+                .font(.system(size: 14))
+                .foregroundColor(iconColor)
+
+            Text(label)
+                .font(.system(size: 13))
+                .foregroundColor(Theme.Colors.foreground)
+
+            Spacer()
+
+            Text("\(current)/\(goal)")
+                .font(.system(size: 13, weight: .semibold))
+                .foregroundColor(Theme.Colors.foreground)
+
+            // Mini progress bar
+            ZStack(alignment: .leading) {
+                RoundedRectangle(cornerRadius: 3)
+                    .fill(Theme.Colors.muted)
+                    .frame(width: 50, height: 6)
+
+                RoundedRectangle(cornerRadius: 3)
+                    .fill(iconColor)
+                    .frame(width: 50 * progress, height: 6)
+            }
+        }
     }
 }
 
