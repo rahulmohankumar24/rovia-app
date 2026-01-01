@@ -344,10 +344,10 @@ struct AnalyticsView: View {
     }
 
     private var weeklyChartCard: some View {
-        VStack(alignment: .leading, spacing: 18) {
+        VStack(alignment: .leading, spacing: 14) {
             HStack {
                 Text("This Week")
-                    .font(.system(size: 17, weight: .semibold))
+                    .font(.system(size: 15, weight: .semibold))
                     .foregroundColor(Theme.Colors.foreground)
 
                 Spacer()
@@ -356,9 +356,9 @@ struct AnalyticsView: View {
                     HStack(spacing: 4) {
                         Circle()
                             .fill(Theme.Colors.primary.opacity(0.5))
-                            .frame(width: 6, height: 6)
+                            .frame(width: 5, height: 5)
                         Text("Target: \(target)")
-                            .font(.system(size: 12))
+                            .font(.system(size: 11))
                             .foregroundColor(Theme.Colors.mutedForeground)
                     }
                 }
@@ -374,15 +374,15 @@ struct AnalyticsView: View {
                         day.isToday ? Theme.Colors.primary :
                             (day.isOnTarget ? Theme.Colors.primary.opacity(0.6) : Theme.Colors.muted)
                     )
-                    .cornerRadius(8)
+                    .cornerRadius(6)
 
                     if let target = stats?.targetCalories {
                         RuleMark(y: .value("Target", target))
                             .foregroundStyle(Theme.Colors.primary.opacity(0.4))
-                            .lineStyle(StrokeStyle(dash: [5, 5]))
+                            .lineStyle(StrokeStyle(dash: [4, 4]))
                     }
                 }
-                .frame(height: 200)
+                .frame(height: 140)
                 .chartYAxis {
                     AxisMarks(position: .leading) { _ in
                         AxisValueLabel()
@@ -400,12 +400,12 @@ struct AnalyticsView: View {
             }
 
             // Legend
-            HStack(spacing: 20) {
+            HStack(spacing: 16) {
                 LegendItem(color: Theme.Colors.primary, label: "On Target")
                 LegendItem(color: Theme.Colors.muted, label: "Off Target")
             }
         }
-        .padding(20)
+        .padding(16)
         .background(Theme.Colors.card)
         .cornerRadius(20)
         .shadow(color: Color.black.opacity(0.04), radius: 8, x: 0, y: 2)
