@@ -130,7 +130,7 @@ struct AnalyticsView: View {
 
     // MARK: - Overview Content
     private var overviewContent: some View {
-        VStack(spacing: 20) {
+        VStack(spacing: 24) {
             // Weekly Summary Hero
             if let insight = weeklySummary?.insight {
                 WeeklyInsightCard(insight: insight, stats: stats)
@@ -144,23 +144,17 @@ struct AnalyticsView: View {
 
             // Macro Breakdown
             macroBreakdownCard
-
-            // Top Insights Preview
-            topInsightsPreview
-
-            // Weekly Goal Progress
-            weeklyGoalCard
         }
-        .padding(.top, 16)
+        .padding(.top, 20)
     }
 
     private var macroBreakdownCard: some View {
-        VStack(alignment: .leading, spacing: 14) {
+        VStack(alignment: .leading, spacing: 20) {
             Text("Weekly Averages")
-                .font(.system(size: 15, weight: .semibold))
+                .font(.system(size: 17, weight: .semibold))
                 .foregroundColor(Theme.Colors.foreground)
 
-            HStack(spacing: 12) {
+            HStack(spacing: 16) {
                 MacroAverageItem(
                     label: "Calories",
                     value: stats?.avgCalories ?? 0,
@@ -193,7 +187,7 @@ struct AnalyticsView: View {
                 )
             }
         }
-        .padding(16)
+        .padding(20)
         .background(Theme.Colors.card)
         .cornerRadius(20)
         .shadow(color: Color.black.opacity(0.04), radius: 8, x: 0, y: 2)
@@ -350,10 +344,10 @@ struct AnalyticsView: View {
     }
 
     private var weeklyChartCard: some View {
-        VStack(alignment: .leading, spacing: 14) {
+        VStack(alignment: .leading, spacing: 18) {
             HStack {
                 Text("This Week")
-                    .font(.system(size: 15, weight: .semibold))
+                    .font(.system(size: 17, weight: .semibold))
                     .foregroundColor(Theme.Colors.foreground)
 
                 Spacer()
@@ -364,7 +358,7 @@ struct AnalyticsView: View {
                             .fill(Theme.Colors.primary.opacity(0.5))
                             .frame(width: 6, height: 6)
                         Text("Target: \(target)")
-                            .font(.system(size: 11))
+                            .font(.system(size: 12))
                             .foregroundColor(Theme.Colors.mutedForeground)
                     }
                 }
@@ -380,7 +374,7 @@ struct AnalyticsView: View {
                         day.isToday ? Theme.Colors.primary :
                             (day.isOnTarget ? Theme.Colors.primary.opacity(0.6) : Theme.Colors.muted)
                     )
-                    .cornerRadius(6)
+                    .cornerRadius(8)
 
                     if let target = stats?.targetCalories {
                         RuleMark(y: .value("Target", target))
@@ -388,7 +382,7 @@ struct AnalyticsView: View {
                             .lineStyle(StrokeStyle(dash: [5, 5]))
                     }
                 }
-                .frame(height: 160)
+                .frame(height: 200)
                 .chartYAxis {
                     AxisMarks(position: .leading) { _ in
                         AxisValueLabel()
@@ -406,12 +400,12 @@ struct AnalyticsView: View {
             }
 
             // Legend
-            HStack(spacing: 16) {
+            HStack(spacing: 20) {
                 LegendItem(color: Theme.Colors.primary, label: "On Target")
                 LegendItem(color: Theme.Colors.muted, label: "Off Target")
             }
         }
-        .padding(16)
+        .padding(20)
         .background(Theme.Colors.card)
         .cornerRadius(20)
         .shadow(color: Color.black.opacity(0.04), radius: 8, x: 0, y: 2)
@@ -588,28 +582,28 @@ struct AnalyticsStatCard: View {
     let label: String
 
     var body: some View {
-        VStack(spacing: 6) {
+        VStack(spacing: 10) {
             ZStack {
                 Circle()
                     .fill(iconColor.opacity(0.12))
-                    .frame(width: 32, height: 32)
+                    .frame(width: 40, height: 40)
                 Image(systemName: icon)
-                    .font(.system(size: 14))
+                    .font(.system(size: 18))
                     .foregroundColor(iconColor)
             }
 
             Text(value)
-                .font(.system(size: 16, weight: .bold))
+                .font(.system(size: 18, weight: .bold))
                 .foregroundColor(Theme.Colors.foreground)
 
             Text(label)
-                .font(.system(size: 10))
+                .font(.system(size: 11))
                 .foregroundColor(Theme.Colors.mutedForeground)
         }
         .frame(maxWidth: .infinity)
-        .padding(.vertical, 14)
+        .padding(.vertical, 18)
         .background(Theme.Colors.card)
-        .cornerRadius(16)
+        .cornerRadius(18)
         .shadow(color: Color.black.opacity(0.04), radius: 8, x: 0, y: 2)
     }
 }
@@ -619,23 +613,23 @@ struct WeeklyInsightCard: View {
     let stats: WeeklyStats?
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 14) {
-            HStack(spacing: 10) {
+        VStack(alignment: .leading, spacing: 18) {
+            HStack(spacing: 14) {
                 ZStack {
                     Circle()
                         .fill(Color.blue.opacity(0.12))
-                        .frame(width: 40, height: 40)
+                        .frame(width: 48, height: 48)
                     Image(systemName: "sparkles")
-                        .font(.system(size: 18))
+                        .font(.system(size: 22))
                         .foregroundColor(.blue)
                 }
 
-                VStack(alignment: .leading, spacing: 2) {
+                VStack(alignment: .leading, spacing: 4) {
                     Text("This Week")
-                        .font(.system(size: 15, weight: .semibold))
+                        .font(.system(size: 17, weight: .semibold))
                         .foregroundColor(Theme.Colors.foreground)
                     Text("\(stats?.totalDaysLogged ?? 0) days analyzed")
-                        .font(.system(size: 12))
+                        .font(.system(size: 13))
                         .foregroundColor(Theme.Colors.mutedForeground)
                 }
 
@@ -643,11 +637,11 @@ struct WeeklyInsightCard: View {
             }
 
             Text(insight)
-                .font(.system(size: 14))
+                .font(.system(size: 15))
                 .foregroundColor(Theme.Colors.foreground)
-                .lineSpacing(3)
+                .lineSpacing(4)
         }
-        .padding(16)
+        .padding(20)
         .background(Theme.Colors.card)
         .cornerRadius(20)
         .shadow(color: Color.black.opacity(0.04), radius: 8, x: 0, y: 2)
@@ -1224,25 +1218,25 @@ struct MacroAverageItem: View {
     }
 
     var body: some View {
-        VStack(spacing: 6) {
+        VStack(spacing: 10) {
             ZStack {
                 Circle()
-                    .stroke(Theme.Colors.muted, lineWidth: 3)
-                    .frame(width: 44, height: 44)
+                    .stroke(Theme.Colors.muted, lineWidth: 4)
+                    .frame(width: 60, height: 60)
 
                 Circle()
                     .trim(from: 0, to: progress)
-                    .stroke(color, style: StrokeStyle(lineWidth: 3, lineCap: .round))
-                    .frame(width: 44, height: 44)
+                    .stroke(color, style: StrokeStyle(lineWidth: 4, lineCap: .round))
+                    .frame(width: 60, height: 60)
                     .rotationEffect(.degrees(-90))
 
                 Text("\(value)\(unit)")
-                    .font(.system(size: 10, weight: .bold))
+                    .font(.system(size: 12, weight: .bold))
                     .foregroundColor(color)
             }
 
             Text(label)
-                .font(.system(size: 10))
+                .font(.system(size: 12))
                 .foregroundColor(Theme.Colors.mutedForeground)
         }
         .frame(maxWidth: .infinity)
