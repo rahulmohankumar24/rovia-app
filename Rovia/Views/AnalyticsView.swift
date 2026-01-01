@@ -267,24 +267,6 @@ struct AnalyticsView: View {
                 isPro: true,
                 action: { selectedTab = .insights }
             )
-
-            QuickActionCard(
-                icon: "brain.head.profile",
-                iconColor: .purple,
-                title: "Patterns",
-                subtitle: "\(patterns.count) detected",
-                isPro: true,
-                action: { selectedTab = .insights }
-            )
-
-            QuickActionCard(
-                icon: "bubble.left.and.bubble.right.fill",
-                iconColor: .blue,
-                title: "Ask Coach",
-                subtitle: "Get answers",
-                isPro: false,
-                action: { selectedTab = .coach }
-            )
         }
     }
 
