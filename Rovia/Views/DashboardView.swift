@@ -104,8 +104,8 @@ struct DashboardView: View {
                                 target: macros?.targets.calories ?? 2000,
                                 label: "cal",
                                 color: Theme.Colors.calories,
-                                size: 90,
-                                lineWidth: 7
+                                size: 100,
+                                lineWidth: 8
                             )
                             Text("\(macros?.remaining.calories ?? 0) left")
                                 .font(.system(size: 11, weight: .medium))
@@ -120,8 +120,8 @@ struct DashboardView: View {
                                 target: macros?.targets.protein ?? 150,
                                 label: "protein",
                                 color: Theme.Colors.protein,
-                                size: 90,
-                                lineWidth: 7
+                                size: 100,
+                                lineWidth: 8
                             )
                             Text("\(macros?.remaining.protein ?? 0)g left")
                                 .font(.system(size: 11, weight: .medium))
@@ -130,13 +130,13 @@ struct DashboardView: View {
                         .frame(maxWidth: .infinity)
 
                         // Carbs & Fat rings
-                        VStack(spacing: 10) {
+                        VStack(spacing: 12) {
                             MacroRingView(
                                 current: macros?.current.carbs ?? 0,
                                 target: macros?.targets.carbs ?? 250,
                                 label: "carbs",
                                 color: Theme.Colors.carbs,
-                                size: 56,
+                                size: 64,
                                 lineWidth: 5
                             )
 
@@ -145,13 +145,13 @@ struct DashboardView: View {
                                 target: macros?.targets.fat ?? 70,
                                 label: "fat",
                                 color: Theme.Colors.fat,
-                                size: 56,
+                                size: 64,
                                 lineWidth: 5
                             )
                         }
                         .frame(maxWidth: .infinity)
                     }
-                    .padding(18)
+                    .padding(20)
                     .background(Theme.Colors.card)
                     .cornerRadius(20)
                     .shadow(color: Color.black.opacity(0.04), radius: 8, x: 0, y: 2)
