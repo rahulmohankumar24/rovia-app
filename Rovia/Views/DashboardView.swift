@@ -96,7 +96,7 @@ struct DashboardView: View {
                     )
 
                     // Progress Card - All Macros (Redesigned)
-                    HStack(spacing: 0) {
+                    HStack(spacing: 8) {
                         // Calories Ring
                         VStack(spacing: 6) {
                             MacroRingView(
@@ -104,8 +104,8 @@ struct DashboardView: View {
                                 target: macros?.targets.calories ?? 2000,
                                 label: "cal",
                                 color: Theme.Colors.calories,
-                                size: 100,
-                                lineWidth: 8
+                                size: 92,
+                                lineWidth: 7
                             )
                             Text("\(macros?.remaining.calories ?? 0) left")
                                 .font(.system(size: 11, weight: .medium))
@@ -120,8 +120,8 @@ struct DashboardView: View {
                                 target: macros?.targets.protein ?? 150,
                                 label: "protein",
                                 color: Theme.Colors.protein,
-                                size: 100,
-                                lineWidth: 8
+                                size: 92,
+                                lineWidth: 7
                             )
                             Text("\(macros?.remaining.protein ?? 0)g left")
                                 .font(.system(size: 11, weight: .medium))
@@ -136,7 +136,7 @@ struct DashboardView: View {
                                 target: macros?.targets.carbs ?? 250,
                                 label: "carbs",
                                 color: Theme.Colors.carbs,
-                                size: 64,
+                                size: 60,
                                 lineWidth: 5
                             )
 
@@ -145,7 +145,7 @@ struct DashboardView: View {
                                 target: macros?.targets.fat ?? 70,
                                 label: "fat",
                                 color: Theme.Colors.fat,
-                                size: 64,
+                                size: 60,
                                 lineWidth: 5
                             )
                         }
