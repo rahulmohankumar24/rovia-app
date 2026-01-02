@@ -101,7 +101,7 @@ struct EatingOutView: View {
                                 HStack(spacing: 4) {
                                     Image(systemName: mode == .eatingOut ? "fork.knife" : "house.fill")
                                         .font(.system(size: 11))
-                                    Text(mode == .eatingOut ? "Out" : "Home")
+                                    Text(mode == .eatingOut ? "Restaurants" : "Home")
                                         .font(.system(size: 12, weight: .medium))
                                 }
                                 .foregroundColor(selectedMode == mode ? Theme.Colors.primaryForeground : Theme.Colors.mutedForeground)
@@ -459,7 +459,7 @@ struct HomeView: View {
                                 HStack(spacing: 4) {
                                     Image(systemName: mode == .eatingOut ? "fork.knife" : "house.fill")
                                         .font(.system(size: 11))
-                                    Text(mode == .eatingOut ? "Out" : "Home")
+                                    Text(mode == .eatingOut ? "Restaurants" : "Home")
                                         .font(.system(size: 12, weight: .medium))
                                 }
                                 .foregroundColor(selectedMode == mode ? Theme.Colors.primaryForeground : Theme.Colors.mutedForeground)
